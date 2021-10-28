@@ -1,3 +1,5 @@
+library(rmarkdown)
+library(knitr)
 ---
 title: "My Final Project Template"
 author: Your name here
