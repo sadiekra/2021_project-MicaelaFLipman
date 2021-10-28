@@ -3,7 +3,7 @@ library(knitr)
 ---
 title: "Land in Farms in New York State"
 author: Micaela F Lipman
-subtitle: Consolidation and erosion of land in farms over time
+subtitle: "Consolidation and erosion of land in farms over time"
 ---
 
 # Introduction
