@@ -2,7 +2,7 @@ library(rmarkdown)
 library(knitr)
 ---
 title: "My Final Project Template"
-author: Your name here
+author: Micaela F Lipman
 subtitle: Subtitle here if desired
 ---
 
