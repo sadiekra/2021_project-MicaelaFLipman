@@ -113,11 +113,10 @@ static2<-ggplot() +
   labs(
     title = "Acres in Farmland: 1910-2017", 
     x = NULL, 
-    y = NULL) +
+    y = NULL,
+    subtitle = '{frame_time}')+
   theme_map() +
-  theme(legend.position = "bottom") 
-
-anim2 <- static2 +
+  theme(legend.position = "bottom") +
   transition_manual(Year) + 
   ease_aes('linear')
 
@@ -127,11 +126,11 @@ anim2 <- static2 +
   #nframes = 22,  
   #end_pause = 3)
 
-loop <- animate( anim2, fps = 10,
+loop <- animate(static2, fps = 10,
 nframes = 22,
-end_pause = 3) + labs(subtitle = {"frame_time"})
+end_pause = 3) 
 
-anim2
+
 ```
 
 These same results are presented in a second visual format of a faceted map which also displays change in acres in farmland over time. 
