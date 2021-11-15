@@ -119,6 +119,7 @@ static2<-ggplot() +
   transition_manual(Year) + 
   ease_aes('linear')
 
+
 loop <- animate(static2, fps = 10,
 nframes = 22,
 end_pause = 3) 
