@@ -42,7 +42,7 @@ LongForm <-read.csv("data/LongForm.csv")
 counties_sf <- get_urbn_map("counties", sf = TRUE) %>% 
   filter(state_abbv=="NY") 
 
-AllCounties<-left_join(x=counties_sf, y=LongForm2, by="county_name", all.x=TRUE) 
+AllCounties<-left_join(x=counties_sf, y=LongForm, by="county_name", all.x=TRUE) 
 
 ```
 
@@ -113,18 +113,11 @@ static2<-ggplot() +
   labs(
     title = "Acres in Farmland: 1910-2017", 
     x = NULL, 
-    y = NULL,
-    subtitle = '{frame_time}')+
+    y = NULL) +
   theme_map() +
   theme(legend.position = "bottom") +
   transition_manual(Year) + 
   ease_aes('linear')
-
-#loop <- animate(
-  #anim2,
-  #fps = 10,          
-  #nframes = 22,  
-  #end_pause = 3)
 
 loop <- animate(static2, fps = 10,
 nframes = 22,
