@@ -1,5 +1,3 @@
-library(rmarkdown)
-library(knitr)
 ---
 title: "Land in Farms in New York State"
 author: Micaela F Lipman
@@ -39,6 +37,9 @@ See [http://rmarkdown.rstudio.com/](http://rmarkdown.rstudio.com/) for all the a
 
 Here's my first code chunk.
 ```{r}
+library(rmarkdown)
+library(knitr)
+
 1+2
 ```
 
