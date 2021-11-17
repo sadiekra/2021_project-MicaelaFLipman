@@ -91,7 +91,7 @@ m  # a map with the default OSM tile layer
 ```
 
 
-```{r}
+```{r, eval=F}
 data %>% 
   ggplot(aes(x=x,y=y,col=category))+
   geom_point()
