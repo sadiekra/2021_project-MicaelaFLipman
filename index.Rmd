@@ -64,7 +64,7 @@ data=data.frame(x=runif(n,-180,180),
                 value = rnorm(n))
 ```
 
-```{r, results='asis'}
+```{r, eval=F, results='asis'}
 data %>% 
   slice(1:10) %>% #show only 1:n rows
   kable(digits=2,align="c")%>% #make table and round to two digits
@@ -91,7 +91,7 @@ m  # a map with the default OSM tile layer
 ```
 
 
-```{r}
+```{r, eval=F}
 data %>% 
   ggplot(aes(x=x,y=y,col=category))+
   geom_point()
