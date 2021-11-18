@@ -47,9 +47,6 @@ NYCounties <- tigris::counties(year = 2015, state = "NY", class = "sf", resoluti
 ##Merging Data
 AllCounties<-left_join(x=NYCounties, y=LongForm, by="NAMELSAD", all.x=TRUE) 
 
-AllCounties %>%
-  mutate(LandInAcres = as.numeric(LandInAcres))
-
 ```
 
 After running several preliminary scatterplots to show land in farms across time in New York State, including an animated scatterplot, I animated a map to visually display the trend of decreasing farmland across all counties over time. Interestingly, after the steepest decline in the 1960s and 1970s, corresponding with a strengthening of the Farm Bill and legislation to support farmers, acres of farms seems to stabilize. 
