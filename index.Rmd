@@ -1,108 +1,301 @@
 ---
-title: "Land in Farms in New York State"
-author: Micaela F Lipman
-subtitle: "Consolidation and erosion of land in farms over time"
+title: "Farmland In New York State"
+author: "Micaela Lipman"
+date: "11/8/2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
-
 # Introduction
+Land in farms within the United States has decreased drastically over time, with a consolidation of unique species found in farmland mosaics (White 1998; Freemark et al. 2002). Decrease in land in farms has negative implications for  biodiversity of local wildlife habitats and stormwater filtering, food sovereignty, loss of cultural heritage and  rural employment patterns (White 1998; Narducci et al. 2019). Loss of farmland remains a key economic concern for rural areas where land use and employment  patterns have not evolved past a focus on the family farm (Edgens and Staley 1999). The federal government of the United States has recognized the negative impacts of loss of farmland, resulting in the passage of the 1996 Farm and Ranch Land Protection Program and 2002 Farm Bill (Bergstrom and Ready 2003; Sokolow  2010). However, federal policies are often structured in ways which disproportionately subsidize certain commodities such as soybeans and cotton, which are not grown at high rates in New York State (Haaren and Bills 2007). The following analyses aims to display how farms and farmland have decreased over time in New York State. Based on the literature, I expect land in farms to decrease over time with the steepest decline occurring after World War II and the decline becoming more shallow after the 1990s with the introduction of farmer support programs. As land in farms decreases, I expect to see some consolidation of small family farms into larger more industrial farms. Measuring erosion of farmland and consolidation of farms is crucial to informing scholarly work in neighboring themes of environmental degradation, loss of food sovereignty, and rural unemployment.
 
-[~ 200 words]
-
-Clearly stated background and questions / hypotheses / problems being addressed. Sets up the analysis in an interesting and compelling way.
 
 # Materials and methods
+In order to conduct the proposed analyses, I have extracted land in farms (acres), and number of farms (#) the years 1910, 1920, 1925, 1930, 1940, 1945, 1950, 1954, 1959, 1964, 1969, 1974, 1978, 1982, 1987, 1992, 1997, 2002, 2007, 2012, and 2017 from the US Agriculture Census administered by the USDA for all counties in New York State. These are the only years for which county level data is made available. I have also extracted the population of each county in NYS for the years 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2012, and 2017 from US Decennial Census Data and ACS 1 year estimate Census Data. 
 
-[~ 200 words]
+By dividing the number of farms by the land in acres in each county, I calculated the average size of farms in each county by year. By dividing the land in acres in each county by the population within each county, I calculated the acres per person in each county by year.  Unfortunately, population estimates are not available at the county level for years 1910, 1925, 1935, 1945, 1954, 1959, 1964 or 1969. Therefore, acres per person was not able to be calculated in these years and as population does not grow linearly, I did not want to apply a mid point method. 
+Such table data was merged in R with county polygon data provided through the “urbnmapr” package using county name as the unique identifier. 
 
-Narrative: Clear narrative description of the data sources and methods. Includes data from at least two sources that were integrated / merged in R.
-
-Code: The code associated with the project is well organized and easy to follow. Demonstrates mastery of R graphics and functions.
-
-Data: The underlying data are publicly accessible via the web and downloaded/accessed within the Rmd script. If you want to use your own data, you must make it available on a website (e.g. Figshare) so that others are able to re-run your code.
-
-You can do bullets like this:
-
-* The first most important thing
-* The second most important thing
-* The third most important thing
-
-You can do numbers like this:
-
-1. The first most important thing
-2. The second most important thing
-3. The third most important thing
-
-See [http://rmarkdown.rstudio.com/](http://rmarkdown.rstudio.com/) for all the amazing things you can do.
-
-
-Here's my first code chunk.
-```{r}
-library(rmarkdown)
-library(knitr)
-
-1+2
-```
-
-Load any required packages in a code chunk (you may need to install some packages):
-
-```{r, message=F, warning=F}
-library(tidyverse)
-library(leaflet)
-library(kableExtra)
-knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling
-```
-
-## Download and clean all required data
-```{r}
-n=20
-data=data.frame(x=runif(n,-180,180),
-                y=runif(n,-60,60),
-                size = runif(n, 5, 20),
-                category = factor(
-                  sample(letters[1:5], n, replace = TRUE)
-                  ),
-                value = rnorm(n))
-```
-
-```{r, eval=F, results='asis'}
-data %>% 
-  slice(1:10) %>% #show only 1:n rows
-  kable(digits=2,align="c")%>% #make table and round to two digits
-  kable_styling(bootstrap_options = 
-                  c("striped", "hover", "condensed", "responsive")) #apply other formatting
-```
-
-Add any additional processing steps here.
+## Data: 
+The data I extracted is made available at: [https://github.com/GEO511-2021/2021_project-MicaelaFLipman/blob/ea0119a7c180fabed5d48131db971a109c57de23/LongForm.csv]
 
 # Results
+```{r Load Libraries and Data, message=FALSE, warning=FALSE, paged.print=FALSE, echo=FALSE}
 
-[~200 words]
+library(tidyverse)
+library(dplyr)
+library(ggplot2) 
+library(readr)
+library(RCurl)
+library(tidyverse)
+library(maps)
+library(ggthemes)
+library(scales)
+library(gganimate)
+library(devtools)
+library(readxl)
+library (tigris)
 
-Tables and figures (maps and other graphics) are carefully planned to convey the results of your analysis. Intense exploration and evidence of many trials and failures. The author looked at the data in many different ways before coming to the final presentation of the data.
 
-Show tables, plots, etc. and describe them.
 
-```{r, eval=F, fig.width=6, fig.height=3, fig.cap="Map of completely random data"}
-m <- leaflet(data) %>% 
-  addTiles() %>% 
-  addCircleMarkers(~x, ~y, radius = ~size,color = ~as.factor(category)) %>% 
-  addPopups(~x[2], ~y[2], "Random popup")
-m  # a map with the default OSM tile layer
+#IMPORT DATA FROM GITHUB
+LongForm <-read.csv("data/LongForm.csv")
+
+NYCounties <- tigris::counties(year = 2015, state = "NY", class = "sf", resolution = "500k")
+
+
+##Merging Data
+AllCounties<-left_join(x=NYCounties, y=LongForm, by="NAMELSAD", all.x=TRUE) 
+
+AllCounties %>%
+  mutate(LandInAcres = as.numeric(LandInAcres))
+
+```
+
+After running several preliminary scatterplots to show land in farms across time in New York State, including an animated scatterplot, I animated a map to visually display the trend of decreasing farmland across all counties over time. Interestingly, after the steepest decline in the 1960s and 1970s, corresponding with a strengthening of the Farm Bill and legislation to support farmers, acres of farms seems to stabilize. 
+### Static Plot: Acres in Farmland: 1910-2017
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ggplot(
+  data=AllCounties, 
+  aes(
+    x=Year, 
+    y = LandInAcres)) + 
+  geom_smooth() + 
+  theme_minimal() +
+  labs(
+    x='Year',
+    y='Acres') +
+  ggtitle("Farm Acres In New York State")
+
 ```
 
 
-```{r, eval=F}
-data %>% 
-  ggplot(aes(x=x,y=y,col=category))+
-  geom_point()
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+static3<-ggplot(
+    AllCounties, 
+    aes(
+        LandInAcres, 
+        NumberofFarms)) +
+  geom_point(
+    alpha = 0.7, 
+    show.legend = FALSE) +
+  scale_size(range = c(2, 12)) +
+  theme_minimal() + 
+  labs(
+    title = "Erosion of Farms in New York State", 
+    x = 'Farmland (Acres)', 
+    y = 'Number Of Farms')
+
+anim3 <- static3 +
+  transition_manual(Year) + 
+  ease_aes('linear')
+
+loop <- animate(
+  anim3,
+  fps = 10,          
+  nframes = 22,  
+  end_pause = 3)
+
+anim3
 ```
 
-# Conclusions
+### Animated Map: Acres in Farmland: 1910-2017
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+static2<-ggplot() +
+  geom_sf(
+    data = AllCounties,
+    mapping = aes(
+                fill = LandInAcres, 
+                geometry = geometry),
+                color = NA) +
+  scale_fill_distiller(
+    palette = "YlGn", 
+    direction = 1,
+    limits=c(0,900000),
+    n.breaks = 4,
+    label=comma,
+    name = "Acres in farmland",
+    guide = "colorbar") +
+  labs(
+    title = "Acres in Farmland: 1910-2017", 
+    x = NULL, 
+    y = NULL) +
+  theme_map() +
+  theme(legend.position = "bottom") +
+  transition_manual(Year) + 
+  ease_aes('linear')
 
-[~200 words]
 
-Clear summary adequately describing the results and putting them in context. Discussion of further questions and ways to continue investigation.
+loop <- animate(static2, fps = 10,
+nframes = 22,
+end_pause = 3) 
+
+
+```
+
+These same results are presented in a second visual format of a faceted map which also displays change in acres in farmland over time. 
+
+### Faceted Map: Acres in Farmland: 1910-2017
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+facet2<-ggplot() +
+  geom_sf(
+    data = AllCounties,
+    mapping = aes(
+      fill = LandInAcres, 
+      geometry = geometry),
+    color = NA) +
+  scale_fill_distiller(
+    palette = "YlGn", 
+    direction = 1,
+    limits=c(0,900000),
+    n.breaks = 4,
+    label=comma,
+    name = "Acres in farmland",
+    guide = "colorbar") +
+  labs(
+    title = "Acres in Farmland: 1910-2017", 
+    x = NULL, 
+    y = NULL) +
+  theme_map() +
+  theme(legend.position = "bottom") +
+  facet_wrap(facets = ~ Year)
+facet2
+```
+
+However, there is a spatial bias to analyzing simply the raw acreage of land in farms in each county as some counties are larger than others. Therefore, the second set of data points presented in the animated and then faceted maps below analyze the land in farms in a county as a proportion of total acreage of farms. Over time, the proportion of land in farms decreased from 74% across New York State in 1910 to 1.63% across New York State in 2017. This change in land use patterning is quite drastic. 
+
+### Animated Map: Proportion of County Acreage in Farmland: 1910-2017
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+static1<-ggplot() +
+  geom_sf(
+    data = AllCounties,
+    mapping = aes(
+                fill = PercTotAcresInFarm, 
+                geometry = geometry),
+                color = NA) +
+  scale_fill_distiller(
+    palette = "YlGn", 
+    direction = 1,
+    limits=c(0,1),
+    n.breaks = 6,
+    name = "Proportion of acres in farmland",
+    guide = "colorbar") +
+  labs(
+    title = "Proportion of County Acreage in Farmland: 1910-2017",
+    x = NULL,
+    y = NULL) +
+  theme_map() +
+  theme(
+    legend.position = "bottom") 
+
+anim1 <- static1 +
+  transition_manual(Year) + 
+  ease_aes('linear')
+
+loop <- animate(
+  anim1,
+  fps = 10,          
+  nframes = 22,  
+  end_pause = 3) 
+
+anim1
+```
+
+### Faceted Map: Proportion of County Acreage in Farmland: 1910-2017
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+facet1<-ggplot() +
+  geom_sf(
+    data = AllCounties,
+    mapping = aes(
+      fill = PercTotAcresInFarm, 
+      geometry = geometry),
+    color = NA) +
+  scale_fill_distiller(
+    palette = "YlGn", 
+    direction = 1,
+    limits=c(0,1),
+    n.breaks = 6,
+    name = "Proportion of acres in farmland",
+    guide = "colorbar") +
+  labs(
+    title = "Proportion of County Acreage in Farmland: 1910-2017",
+    x = NULL,
+    y = NULL) +
+  theme_map() +
+  theme(
+    legend.position = "bottom") + 
+  facet_wrap(facets=.~Year)
+
+facet1
+```
+
+The following scatterplot addresses the fact that population in New York State has increased over time. This scatterplot is not presented by county in order to avoid the bias of local food systems (Born and Purcell 2006). The myth that higher population densities must be supported by higher proportions of local land in farms in order to provide adequate food resources and environmental resources to support a denser population has been largely debunked, most notably by Born and Purcell (2006). Rather a regional approach should be used to address resource constraints. Therefore, the plot below shows a smoothed generalized linear model representing farms per person across counties in New York State over time. This plot shows that on average, acres in farms per person has decreased from over 6 acres in 1920 to under 2 acres in 2017. Possibly this stark erosion of farmland is due to the increased demands more dense populations place on competing land uses such as housing which would crowd out the land available to farms. This hypothesis is supported by the following data visualizations and overall by central place theory in urban and regional planning (Dacey, 1965). However, the data visualizations are insufficient to prove the hypothesis on their own and additional comparative research would need to be conducted. 
+
+### Static Plot: Acres of Farms per Person in New York State 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+ggplot(
+  data=AllCounties, 
+  aes(
+    x=Year, 
+    y = LandInAcresPerPopulation)) + 
+  geom_smooth() + 
+  theme_minimal() +
+  labs(
+    x='Year', 
+    y = 'Acres/Person') +
+  ggtitle("Acres of Farms per Person in New York State")
+```
+
+The final data visualizations displayed shows the average size of farms in New York State. Potentially due to decreasing profitability of the small family farm over time and pressures for farmers to scale up in order to ensure success and reach certain government subsidy threshholds, up until the early 1990s, the average size of farms increased representing the decline of the family farm. Interestingly, in the early 1990s, the direction of the trend line reversed with the average size of farms decreasing and then plateouing out in recent years. This reversal in trends is quite interesting and is not addressed in wider literature. 
+
+### Static Plot: Average Size of Farms In New York State
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(
+  data=AllCounties, 
+  aes(
+    x=Year, 
+    y = AvSizeFarmAcres)) + 
+  geom_smooth() + 
+  theme_minimal() +
+  labs(
+    x='Year',
+    y='Acres') +
+  ggtitle("Average Size of Farms In New York State")
+
+```
+
+# Conclusion
+
+In conclusion, while learning to construct animated maps and scatterplots was fruitful for my own learning opportunities, it turned out that more simple plots of overall trends were more instructive in answering my two key research questions outlined in the introduction. The first hypothesis outlined in the introduction were supported by the data visualizations above. Erosion of land in farms did increase during post World War II suburbanization and did decline after the implementation of farmer support programs in the 1990s. The second hypothesis outlined in the introduction was supported in generality by the data visualizations above in that the trend across most years was towards an increasing farm size across counties. However, this trend appears to have reversed in the early 1990s with a leveling out of the size of farms in New York State counties in recent decades. This reversal in trend is quite interesting and is an area where fruitful additional research could take place. 
 
 # References
+Bergstrom, John C., and Richard C. Ready. "Economic Valuation of Farm and Ranch Land Amenities: What Economists Have Learned About Public Values and Preferences." (2003).
 
-All sources are cited in a consistent manner
+Born, Branden, and Mark Purcell. "Avoiding the local trap: Scale and food systems in planning research." Journal of planning education and research 26, no. 2 (2006): 195-207.
+
+Dacey, Michael F. "The geometry of central place theory." Geografiska Annaler: Series B, Human Geography 47, no. 2 (1965): 111-124.
+
+Edgens, Jefferson G., and Samuel R. Staley. "The myth of farmland loss." In Forum for applied research and public policy, vol. 14, pp. 29-34. EXECUTIVE SCIENCES INSTITUTE INC, 1999.
+
+Freemark, Kathryn E., Céline Boutin, and Cathy J. Keddy. "Importance of farmland habitats for conservation of plant species." Conservation Biology 16, no. 2 (2002): 399-412.
+
+Haaren, Christina V., and Nelson L. Bills. "Agri-environmental programs in the US and the EU: lessons from Germany and New York State." (2007).
+
+Narducci, Jenna, Cristina Quintas-Soriano, Antonio Castro, Rebecca Som-Castellano, and Jodi S. Brandt. "Implications of urban growth and farmland loss for ecosystem services in the western United States." Land Use Policy 86 (2019): 1-11.
+
+Sokolow, Alvin D. "Federal policy for preserving farmland: The farm and ranch lands protection program." Publius: The Journal of Federalism 40, no. 2 (2010): 235-256.
+
+White, Jeanne S. "Beating plowshares into townhomes: The loss of farmland and strategies for slowing its conversion to nonagricultural uses." Envtl. L. 28 (1998): 113.
+
+# Questions for Dr. Wilson and Peers 
+
+
+1) Why can't I get the subtitle to change as year changes in the animated maps? I've tried using the code below but it comes up with an error every time. I think the error might be that since I don't have data for every year I had to use transition_manual(Year) so R doesn't read Year as continuous???
+
+  loop <- animate(
+  anim2,
+  fps = 10,          
+  nframes = 22,  
+  end_pause = 3) + 
+  labs(subtitle = {year})
