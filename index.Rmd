@@ -2,7 +2,7 @@
 title: "Farmland In New York State"
 author: "Micaela Lipman"
 
-output:
+output: html_document
   html_document:
     theme: simplex
     highlight: textmate
