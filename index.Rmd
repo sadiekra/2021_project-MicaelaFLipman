@@ -46,6 +46,8 @@ library(scales)
 library(gganimate)
 library(devtools)
 library(readxl)
+library(tigris)
+options(tigris_use_cache=TRUE)
 
 
 
