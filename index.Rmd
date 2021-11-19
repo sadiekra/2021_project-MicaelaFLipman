@@ -2,6 +2,21 @@
 title: "Farmland In New York State"
 author: "Micaela Lipman"
 
+output:
+  html_document:
+    theme: simplex
+    highlight: textmate
+    mathjax: null
+    toc: true
+    toc_depth: 2
+    toc_float:
+       collapsed: true
+       smooth_scroll: true
+       number_sections: true
+    includes:
+      after_body: include/after_body.html
+    css: styles.css
+    keep_md: false
 ---
 # Introduction
 Land in farms within the United States has decreased drastically over time, with a consolidation of unique species found in farmland mosaics (White 1998; Freemark et al. 2002). Decrease in land in farms has negative implications for  biodiversity of local wildlife habitats and stormwater filtering, food sovereignty, loss of cultural heritage and  rural employment patterns (White 1998; Narducci et al. 2019). Loss of farmland remains a key economic concern for rural areas where land use and employment  patterns have not evolved past a focus on the family farm (Edgens and Staley 1999). The federal government of the United States has recognized the negative impacts of loss of farmland, resulting in the passage of the 1996 Farm and Ranch Land Protection Program and 2002 Farm Bill (Bergstrom and Ready 2003; Sokolow  2010). However, federal policies are often structured in ways which disproportionately subsidize certain commodities such as soybeans and cotton, which are not grown at high rates in New York State (Haaren and Bills 2007). The following analyses aims to display how farms and farmland have decreased over time in New York State. Based on the literature, I expect land in farms to decrease over time with the steepest decline occurring after World War II and the decline becoming more shallow after the 1990s with the introduction of farmer support programs. As land in farms decreases, I expect to see some consolidation of small family farms into larger more industrial farms. Measuring erosion of farmland and consolidation of farms is crucial to informing scholarly work in neighboring themes of environmental degradation, loss of food sovereignty, and rural unemployment.
