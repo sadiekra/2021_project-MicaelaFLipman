@@ -59,9 +59,9 @@ NYCounties <- tigris::counties(year = 2015, state = "NY", class = "sf", resoluti
 
 
 ##Merging Data
-AllCounties<-left_join(x=NYCounties, y=LongForm, by="GEOID", all.x=TRUE) 
+AllCounties2<-left_join(x=NYCounties, y=LongForm, by="GEOID", all.x=TRUE) 
 
-AllCounties %>%
+AllCounties<-AllCounties2 %>%
   mutate(LandInAcres=as.numeric(LandInAcres)) %>%
    mutate(Year=as.numeric(Year))
 ```
