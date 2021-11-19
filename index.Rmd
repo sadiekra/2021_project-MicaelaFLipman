@@ -66,7 +66,11 @@ AllCounties<-AllCounties2 %>%
   mutate(LandInAcres=as.numeric(LandInAcres)) %>%
    mutate(Year=as.numeric(Year)) %>%
    mutate(NumberofFarms=as.numeric(NumberofFarms)) %>%  
-  mutate(AvSizeFarmAcres=as.numeric(AvSizeFarmAcres)) 
+  mutate(AvSizeFarmAcres=as.numeric(AvSizeFarmAcres)) %>%
+   mutate(PercTotAcresInFarm=as.numeric(PercTotAcresInFarm)) %>%
+   mutate(Population=as.numeric(Population)) %>%
+ mutate(LandInAcresPerPopulation=as.numeric(LandInAcresPerPopulation)) 
+  
 ```
 
 After running several preliminary scatterplots to show land in farms across time in New York State, including an animated scatterplot, I animated a map to visually display the trend of decreasing farmland across all counties over time. Interestingly, after the steepest decline in the 1960s and 1970s, corresponding with a strengthening of the Farm Bill and legislation to support farmers, acres of farms seems to stabilize. 
@@ -193,12 +197,12 @@ static1<-ggplot() +
   scale_fill_distiller(
     palette = "YlGn", 
     direction = 1,
-    limits=c(0,100),
+    limits=c(0,1),
     n.breaks = 6,
-    name = "Percentage of acres in farmland",
+    name = "Proportion of acres in farmland",
     guide = "colorbar") +
   labs(
-    title = "Percentage of County Acreage in Farmland: 1910-2017",
+    title = "Proportion of County Acreage in Farmland: 1910-2017",
     x = NULL,
     y = NULL) +
   theme_map() +
@@ -232,10 +236,10 @@ facet1<-ggplot() +
     direction = 1,
     limits=c(0,1),
     n.breaks = 6,
-    name = "Percentage of acres in farmland",
+    name = "Proportion of acres in farmland",
     guide = "colorbar") +
   labs(
-    title = "Percentage of County Acreage in Farmland: 1910-2017",
+    title = "Proportion of County Acreage in Farmland: 1910-2017",
     x = NULL,
     y = NULL) +
   theme_map() +
