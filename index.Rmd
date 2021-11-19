@@ -55,7 +55,8 @@ options(tigris_use_cache=TRUE)
 LongForm <-read.csv("data/LongFormGEOID.csv")
 
 NYCounties <- tigris::counties(year = 2015, state = "NY", class = "sf", resolution = "500k") %>%
-  mutate(GEOID=as.numeric(GEOID))
+  mutate(GEOID=as.numeric(GEOID)) 
+  
 
 
 ##Merging Data
@@ -63,7 +64,13 @@ AllCounties2<-left_join(x=NYCounties, y=LongForm, by="GEOID", all.x=TRUE)
 
 AllCounties<-AllCounties2 %>%
   mutate(LandInAcres=as.numeric(LandInAcres)) %>%
-   mutate(Year=as.numeric(Year))
+   mutate(Year=as.numeric(Year)) %>%
+   mutate(NumberofFarms=as.numeric(NumberofFarms)) %>%  
+  mutate(AvSizeFarmAcres=as.numeric(AvSizeFarmAcres)) %>%
+   mutate(PercTotAcresInFarm=as.numeric(PercTotAcresInFarm)) %>%
+   mutate(Population=as.numeric(Population)) %>%
+ mutate(LandInAcresPerPopulation=as.numeric(LandInAcresPerPopulation)) 
+  
 ```
 
 After running several preliminary scatterplots to show land in farms across time in New York State, including an animated scatterplot, I animated a map to visually display the trend of decreasing farmland across all counties over time. Interestingly, after the steepest decline in the 1960s and 1970s, corresponding with a strengthening of the Farm Bill and legislation to support farmers, acres of farms seems to stabilize. 
