@@ -46,7 +46,6 @@ library(scales)
 library(gganimate)
 library(devtools)
 library(readxl)
-library (tigris)
 
 
 
