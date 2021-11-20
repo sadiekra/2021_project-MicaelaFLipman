@@ -142,15 +142,19 @@ static2<-ggplot() +
     x = NULL, 
     y = NULL) +
   theme_map() +
-  theme(legend.position = "bottom") +
+  theme(legend.position = "bottom") 
+
+anim2 <- static2 +
   transition_manual(Year) + 
   ease_aes('linear')
 
+loop <- animate(
+  anim2,
+  fps = 10,          
+  nframes = 22,  
+  end_pause = 3) 
 
-loop <- animate(static2, fps = 10,
-nframes = 22,
-end_pause = 3) 
-
+anim2
 
 ```
 
