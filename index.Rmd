@@ -32,7 +32,7 @@ Such table data was merged in R with county polygon data provided through the â€
 The data I extracted is made available at: [https://github.com/GEO511-2021/2021_project-MicaelaFLipman/blob/ea0119a7c180fabed5d48131db971a109c57de23/LongForm.csv]
 
 # Results
-```{r Load Libraries and Data, message=FALSE, warning=FALSE, paged.print=FALSE, echo=FALSE}
+```{r Load Libraries and Data, message=FALSE, warning=FALSE, paged.print=FALSE, echo=TRUE}
 
 library(tidyverse)
 library(dplyr)
@@ -75,7 +75,7 @@ AllCounties<-AllCounties2 %>%
 
 After running several preliminary scatterplots to show land in farms across time in New York State, including an animated scatterplot, I animated a map to visually display the trend of decreasing farmland across all counties over time. Interestingly, after the steepest decline in the 1960s and 1970s, corresponding with a strengthening of the Farm Bill and legislation to support farmers, acres of farms seems to stabilize. 
 ### Static Plot: Acres in Farmland: 1910-2017
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 ggplot(
   data=AllCounties, 
   aes(
@@ -91,7 +91,7 @@ ggplot(
 ```
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 static3<-ggplot(
     AllCounties, 
     aes(
@@ -121,7 +121,7 @@ anim3
 ```
 
 ### Animated Map: Acres in Farmland: 1910-2017
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 static2<-ggplot() +
   geom_sf(
     data = AllCounties,
@@ -161,7 +161,7 @@ anim2
 These same results are presented in a second visual format of a faceted map which also displays change in acres in farmland over time. 
 
 ### Faceted Map: Acres in Farmland: 1910-2017
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 facet2<-ggplot() +
   geom_sf(
     data = AllCounties,
@@ -190,7 +190,7 @@ facet2
 However, there is a spatial bias to analyzing simply the raw acreage of land in farms in each county as some counties are larger than others. Therefore, the second set of data points presented in the animated and then faceted maps below analyze the land in farms in a county as a proportion of total acreage of farms. Over time, the proportion of land in farms decreased from 74% across New York State in 1910 to 1.63% across New York State in 2017. This change in land use patterning is quite drastic. 
 
 ### Animated Map: Proportion of County Acreage in Farmland: 1910-2017
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 static1<-ggplot() +
   geom_sf(
     data = AllCounties,
@@ -227,7 +227,7 @@ anim1
 ```
 
 ### Faceted Map: Proportion of County Acreage in Farmland: 1910-2017
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 facet1<-ggplot() +
   geom_sf(
     data = AllCounties,
@@ -257,7 +257,7 @@ facet1
 The following scatterplot addresses the fact that population in New York State has increased over time. This scatterplot is not presented by county in order to avoid the bias of local food systems (Born and Purcell 2006). The myth that higher population densities must be supported by higher proportions of local land in farms in order to provide adequate food resources and environmental resources to support a denser population has been largely debunked, most notably by Born and Purcell (2006). Rather a regional approach should be used to address resource constraints. Therefore, the plot below shows a smoothed generalized linear model representing farms per person across counties in New York State over time. This plot shows that on average, acres in farms per person has decreased from over 6 acres in 1920 to under 2 acres in 2017. Possibly this stark erosion of farmland is due to the increased demands more dense populations place on competing land uses such as housing which would crowd out the land available to farms. This hypothesis is supported by the following data visualizations and overall by central place theory in urban and regional planning (Dacey, 1965). However, the data visualizations are insufficient to prove the hypothesis on their own and additional comparative research would need to be conducted. 
 
 ### Static Plot: Acres of Farms per Person in New York State 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 
 ggplot(
   data=AllCounties, 
@@ -275,7 +275,7 @@ ggplot(
 The final data visualizations displayed shows the average size of farms in New York State. Potentially due to decreasing profitability of the small family farm over time and pressures for farmers to scale up in order to ensure success and reach certain government subsidy threshholds, up until the early 1990s, the average size of farms increased representing the decline of the family farm. Interestingly, in the early 1990s, the direction of the trend line reversed with the average size of farms decreasing and then plateouing out in recent years. This reversal in trends is quite interesting and is not addressed in wider literature. 
 
 ### Static Plot: Average Size of Farms In New York State
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 ggplot(
   data=AllCounties, 
   aes(
