@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Micaela Lipman" />
+
+<meta name="date" content="2021-10-16" />
+
+<title>The decline of land in farms in New York State between 1920 and 2017</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Spatial Data Science Final Project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">The decline of land in farms in New York State between 1920 and 2017</h1>
+<h3 class="subtitle">Proposal for GIS 511</h3>
+<h4 class="author">Micaela Lipman</h4>
+<h4 class="date">10/16/2021</h4>
+
+</div>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction:</h1>
+<p>As New York State has urbanized, significant land in farms has been transitioned to other land uses. However, has this reduction in farmland also led to the collapse of the small family farm? How have number of farms decreased as land in farms have decreased? Moreover, how has loss in farmland changed as population changed? I will explore these questions across counties in New York State in order to better understand: 1) the extent of loss of farmland over time; 2) the change in average acres per farm over time, and 3) the relationship between population and acres in farmland.</p>
+</div>
+<div id="examples" class="section level1">
+<h1>Examples:</h1>
+<p>I selected these links as I would like to reproduce these types of images for my expected results:</p>
+<p><a href="https://twitter.com/aronstrandberg/status/685475656059203584">This first link</a> shows an animated choropleth map of life expectancy of countries across Europe projected over the time period 1960-2060.</p>
+<p><a href="https://twitter.com/d4tagirl/status/864207469911957504?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E864207469911957504%7Ctwgr%5E%7Ctwcon%5Es1_&amp;ref_url=https%3A%2F%2Fd4tagirl.com%2F2017%2F05%2Fhow-to-plot-animated-maps-with-gganimate">This second link</a> shows an animated proportional symbol map.</p>
+<p><img src="https://www.r-graph-gallery.com/density_mirror_ggplot2_files/figure-html/unnamed-chunk-2-1.png" alt="This third link" /> This mirror density plot above shows how to communicate multiple variables across the same time period and geography in a static way.</p>
+<p><img src="https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/r-tutorial/images/view_follow.gif" alt="This fourth link" /> This animated scatterplot above shows how to communicate multiple variables across the same time period and geography in an animated way.</p>
+</div>
+<div id="proposed-data-sources" class="section level1">
+<h1>Proposed Data Sources:</h1>
+<p>I have manually extracted land in farms (acres), number of farms (#), and average size of farms(acre) for the years 1910, 1920, 1925, 1930, 1940, 1945, 1950, 1945, 1959, 1964, 1969, 1974, 1978, 1982, 1987, 1992, 1997, 2002, 2007, 2012, and 2017 from the <em>US Agriculture Census administered by the USDA</em> for all counties in New York State. I have also extracted the population of each county in NYS for the years 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2012, and 2017 from <em>US Decennial Census Data and ACS 1 year estimate Census Data</em>.</p>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods:</h1>
+<p><strong>Tidyverse</strong> – to make piping code easier.</p>
+<p><strong>Sp and sf</strong> – to make it easier to manipulate spatial data</p>
+<p><strong>Dplyr</strong> – to integrate multiple data frames and compute graphics using multiple data frames.</p>
+<p><strong>ggplot2</strong> – to create plots</p>
+<p><strong>gganimate</strong> – to animate maps and gscatterplots</p>
+<p><strong>urbnmapr</strong> – to capture state and county boundaries</p>
+</div>
+<div id="expected-results" class="section level1">
+<h1>Expected Results:</h1>
+<ol style="list-style-type: decimal">
+<li><p>I will start by creating an <strong>animated choropleth map</strong> to show change in land in farms over the time period 1940-2002 across counties in New York State in acres. I expect land in farms to decrease over time.</p></li>
+<li><p>While I know that the best practice among data visualization is to use a choropleth map as the human eye has trouble judging changes in area, I would like to still construct a version of an <strong>animated proportional symbol map</strong> so I can compare it to an animated choropleth map. The animated proportional symbol will also show acres of land in farms over the time period 1940-2002 across counties in New York State. I may not include this in the final poster, but would like to try it for my own learning.</p></li>
+<li><p>I will construct a <strong>mirror density</strong> plots to show how land in farms has decreased over time, while number of farms has decreased over time. Here the average rates for NYS will be used instead of separated data for each county. I expect the results to show that number of farms has decreased more steeply than acres in agriculture showing a consolidation of farms into larger entities.</p></li>
+<li><p>I will show an <strong>animated scatterplot</strong> of how land in farms (y axis) and size of population (x axis) for each county in NYS. I expect to show how as population doubled, almost half of land in farms was lost. The implications for this change mean that our food system has drastically changed over the past century. However, our food policy has not kept up.</p></li>
+<li><p>If the mirror density plot is ineffective, I will show another <strong>animated scatterplot</strong> of how number of farms (x axis) and land in farms (y axis) change over time for each county in NYS to show the consolidation of farms.</p></li>
+</ol>
+</div>
+<div id="questions" class="section level1">
+<h1>Questions:</h1>
+<ol style="list-style-type: decimal">
+<li><p>I’m not sure how to best clean my data for R. If I have a column named “1920” in each data frame with different data, should I adjust the column name to a character string” landinfarms1920” or will that take away r’s ability to read the value as a time series? If I leave a column named 1920 in each data frame, will they be overwritten?</p></li>
+<li><p>The years of the ag census did not line up exactly with the years population data was collected. In an animated scatterplot, can the x and y axis move at different paces?</p></li>
+</ol>
+</div>
+
+<!-- give the footer some space -->
+<br/>
+<br/>
+
+<footer id="site-footer">
+  <div id="footer1">
+  This website is a project for Adam Wilson's <a href="https://wilsonlab.io/GEO511"><i> Spatial Data Science (GEO511) </i></a>Course at the University at Buffalo
+  </div>
+  <div id="footer2">
+  <a rel="license" property="http://creativecommons.org/ns#license"
+  href="http://creativecommons.org/licenses/by/4.0/" ><img src="img/cc-by.svg" alt="cc-by"/></a> 
+  </div>
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+
+</body>
+</html>
