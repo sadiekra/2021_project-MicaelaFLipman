@@ -32,7 +32,7 @@ Such table data was merged in R with county polygon data provided through the â€
 The data I extracted is made available at: [https://github.com/GEO511-2021/2021_project-MicaelaFLipman/blob/ea0119a7c180fabed5d48131db971a109c57de23/LongForm.csv]
 
 # Results
-```{r Load Libraries and Data, message=FALSE, warning=FALSE, paged.print=FALSE, echo=TRUE}
+```{r Load Libraries and Data, message=FALSE, warning=FALSE, paged.print=FALSE, echo=TRUE, results = 'hide'}
 
 library(tidyverse)
 library(dplyr)
