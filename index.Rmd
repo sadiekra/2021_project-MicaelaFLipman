@@ -312,15 +312,3 @@ Narducci, Jenna, Cristina Quintas-Soriano, Antonio Castro, Rebecca Som-Castellan
 Sokolow, Alvin D. "Federal policy for preserving farmland: The farm and ranch lands protection program." Publius: The Journal of Federalism 40, no. 2 (2010): 235-256.
 
 White, Jeanne S. "Beating plowshares into townhomes: The loss of farmland and strategies for slowing its conversion to nonagricultural uses." Envtl. L. 28 (1998): 113.
-
-# Questions for Dr. Wilson and Peers 
-
-
-1) Why can't I get the subtitle to change as year changes in the animated maps? I've tried using the code below but it comes up with an error every time. I think the error might be that since I don't have data for every year I had to use transition_manual(Year) so R doesn't read Year as continuous???
-
-  loop <- animate(
-  anim2,
-  fps = 10,          
-  nframes = 22,  
-  end_pause = 3) + 
-  labs(subtitle = {year})
