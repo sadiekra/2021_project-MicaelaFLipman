@@ -40,6 +40,7 @@ library(ggplot2)
 library(readr)
 library(RCurl)
 library(tidyverse)
+library(transformr)
 library(maps)
 library(ggthemes)
 library(scales)
@@ -92,7 +93,7 @@ ggplot(
 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-static3<-ggplot(
+anim1<-ggplot(
     AllCounties, 
     aes(
         LandInAcres, 
@@ -102,58 +103,48 @@ static3<-ggplot(
     show.legend = FALSE) +
   scale_size(range = c(2, 12)) +
   theme_minimal() + 
+  transition_time(Year) + 
+  ease_aes('linear')+
+  scale_x_continuous(labels = scales::comma) +
   labs(
     title = "Erosion of Farms in New York State", 
     x = 'Farmland (Acres)', 
-    y = 'Number Of Farms')
+    y = 'Number Of Farms',
+    subtitle = 'Year:{round(frame_time)}')
 
-anim3 <- static3 +
-  transition_manual(Year) + 
-  ease_aes('linear')
-
-loop <- animate(
-  anim3,
-  fps = 10,          
-  nframes = 22,  
-  end_pause = 3)
-
-anim3
+anim1
 ```
 
 ### Animated Map: Acres in Farmland: 1910-2017
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-static2<-ggplot() +
+
+
+anim2<-ggplot() +
   geom_sf(
     data = AllCounties,
     mapping = aes(
-                fill = LandInAcres, 
+                fill = LandInAcres/100000, 
                 geometry = geometry),
                 color = NA) +
   scale_fill_distiller(
     palette = "YlGn", 
     direction = 1,
-    limits=c(0,900000),
+    limits=c(0,9),
     n.breaks = 4,
     label=comma,
-    name = "Acres in farmland",
+    name = "Acres in farmland (100,000 acres)",
     guide = "colorbar") +
-  labs(
+  theme_map() +
+  theme(legend.position = "bottom")  +
+  transition_time(Year) + 
+  ease_aes('linear') + 
+    labs(
     title = "Acres in Farmland: 1910-2017", 
     x = NULL, 
-    y = NULL) +
-  theme_map() +
-  theme(legend.position = "bottom") 
+    y = NULL,
+    subtitle = 'Year: {round(frame_time)}')
 
-anim2 <- static2 +
-  transition_manual(Year) + 
-  ease_aes('linear')
-
-loop <- animate(
-  anim2,
-  fps = 10,          
-  nframes = 22,  
-  end_pause = 3) 
-
+?digits
 anim2
 
 ```
@@ -166,16 +157,16 @@ facet2<-ggplot() +
   geom_sf(
     data = AllCounties,
     mapping = aes(
-      fill = LandInAcres, 
+      fill = LandInAcres/100000, 
       geometry = geometry),
     color = NA) +
   scale_fill_distiller(
     palette = "YlGn", 
     direction = 1,
-    limits=c(0,900000),
+    limits=c(0,9),
     n.breaks = 4,
     label=comma,
-    name = "Acres in farmland",
+    name = "Acres in farmland (100,000 acres)",
     guide = "colorbar") +
   labs(
     title = "Acres in Farmland: 1910-2017", 
@@ -191,7 +182,7 @@ However, there is a spatial bias to analyzing simply the raw acreage of land in 
 
 ### Animated Map: Proportion of County Acreage in Farmland: 1910-2017
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-static1<-ggplot() +
+ggplot() +
   geom_sf(
     data = AllCounties,
     mapping = aes(
@@ -205,25 +196,16 @@ static1<-ggplot() +
     n.breaks = 6,
     name = "Proportion of acres in farmland",
     guide = "colorbar") +
+  theme_map() +
+  theme(
+    legend.position = "bottom") + 
+   transition_time(Year) + 
+  ease_aes('linear') +
   labs(
     title = "Proportion of County Acreage in Farmland: 1910-2017",
     x = NULL,
-    y = NULL) +
-  theme_map() +
-  theme(
-    legend.position = "bottom") 
-
-anim1 <- static1 +
-  transition_manual(Year) + 
-  ease_aes('linear')
-
-loop <- animate(
-  anim1,
-  fps = 10,          
-  nframes = 22,  
-  end_pause = 3) 
-
-anim1
+    y = NULL, 
+    subtitle = 'Year:{round(frame_time)}')
 ```
 
 ### Faceted Map: Proportion of County Acreage in Farmland: 1910-2017
@@ -312,3 +294,4 @@ Narducci, Jenna, Cristina Quintas-Soriano, Antonio Castro, Rebecca Som-Castellan
 Sokolow, Alvin D. "Federal policy for preserving farmland: The farm and ranch lands protection program." Publius: The Journal of Federalism 40, no. 2 (2010): 235-256.
 
 White, Jeanne S. "Beating plowshares into townhomes: The loss of farmland and strategies for slowing its conversion to nonagricultural uses." Envtl. L. 28 (1998): 113.
+
