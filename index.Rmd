@@ -49,8 +49,6 @@ library(readxl)
 library(tigris)
 options(tigris_use_cache=TRUE)
 
-
-
 #IMPORT DATA FROM GITHUB
 LongForm <-read.csv("data/LongFormGEOID.csv")
 
