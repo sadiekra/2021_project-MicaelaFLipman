@@ -37,8 +37,6 @@ The data I extracted is made available at: [https://github.com/GEO511-2021/2021_
 library(tidyverse)
 library(dplyr)
 library(ggplot2) 
-
-
 library(readr)
 library(RCurl)
 library(tidyverse)
